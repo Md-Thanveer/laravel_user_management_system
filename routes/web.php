@@ -29,3 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+    Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::resource('users', UserController::class);
+});
